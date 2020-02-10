@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Token.belongsTo(models.User, {
       onDelete: 'CASADE',
-      foreignKey: 'userToken'
+      foreignKey: 'tokenId'
     })
   };
   return Token;
