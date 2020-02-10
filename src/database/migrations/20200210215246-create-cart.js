@@ -8,11 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      productId: {
-        type: Sequelize.INTEGER
-      },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId'
+        }
+      },
+      productId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Products',
+          key: 'id',
+          as: 'productId'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -28,3 +38,4 @@ module.exports = {
     return queryInterface.dropTable('Carts');
   }
 };
+
