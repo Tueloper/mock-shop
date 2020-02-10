@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-// import route from './routes';
+import route from './routes';
 import cors from 'cors';
 
 const app = express();
@@ -10,6 +10,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-// route(app);
+route(app);
 
 export default app;
