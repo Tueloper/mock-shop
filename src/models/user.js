@@ -28,6 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'cart'
     })
+
+    //token association with user
+    User.hasMany(models.Token, {
+      foreignKey: 'userToken',
+      as: 'token'
+    })
   };
   return User;
 };

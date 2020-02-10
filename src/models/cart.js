@@ -2,11 +2,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Cart = sequelize.define('Cart', {
     productId: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     userId: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     }
   }, {});
