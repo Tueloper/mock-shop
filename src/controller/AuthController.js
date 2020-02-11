@@ -90,7 +90,9 @@ const AuthController = {
       if (!checkPassword) {
         return sendErrorResponse(res, 400, 'Details incorrect');
       }
-      return sendSuccessResponse(res, 200, userToken(user.dataValues));
+
+      const token = userToken(user.dataValues);
+      return sendSuccessResponse(res, 200, token);
     } catch (e) {
       next(e);
     }
@@ -101,7 +103,7 @@ const AuthController = {
       const user = req.userData;
 
       const profile = await User.findOne({
-        where: { uuid: user.uuid },
+        where: { id: user.id },
         attributes: {
           exclude: ['password'],
         }
