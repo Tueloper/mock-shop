@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     User.hasMany(models.Cart, {
       foreignKey: 'userId',
-      as: 'cart'
+      as: 'carts'
     })
 
     //token association with user

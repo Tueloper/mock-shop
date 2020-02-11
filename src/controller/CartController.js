@@ -1,15 +1,13 @@
 import models from './../models';
 import { sendErrorResponse, sendSuccessResponse } from './../utils/sendResponse';
-import { isValidInput, magicTrimmer, validate } from './../utils/validator';
-import { cloudinaryImage, destroyCloudinaryImage } from './../utils/Cloudinary';
 
-const { Product } = models;
+const { User, Product, Cart } = models;
 
 /**
  * Product Controller.
  * 
  */
-const ProductController = {
+const CartController = {
 
   /**
    * 
@@ -17,7 +15,7 @@ const ProductController = {
    * @param {object} res 
    * 
    */
-  async createProduct(req, res) {
+  async AddProductCart(req, res, next) {
     try {
      //trime the product object
       const productData = magicTrimmer(req.body);
