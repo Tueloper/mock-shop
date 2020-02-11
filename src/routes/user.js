@@ -1,12 +1,11 @@
 import express from 'express';
-import AuthController from './../controller/AuthController';
-import Auth from './../middleware/Auth';
+import UserController from '../controller/CartController';
+import Auth from '../middleware/Auth';
+import isUser from './../middleware/isUser';
 
 const router = express.Router();
 
-router.post('/auth/signup', AuthController.signUp );
-router.post('/auth/signin', AuthController.signIn );
-router.get('/auth/me', Auth, AuthController.me );
-router.delete('/auth/logout', Auth, AuthController.logout );
+router.post('/cart/create/:productId', [ Auth, isUser ], UserController.AddProductCart );
+router.get('/profile/carts', [ Auth, isUser ], UserController.getUserCartProducts );
 
 export default router;
