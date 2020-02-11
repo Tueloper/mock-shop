@@ -26,6 +26,9 @@ module.exports = {
       imageUrl: {
         type: Sequelize.STRING
       },
+      image_publicId: {
+        type: Sequelize.STRING
+      },
       isStock: {
         type: Sequelize.BOOLEAN
       },

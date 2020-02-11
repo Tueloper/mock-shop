@@ -23,4 +23,15 @@ const cloudinaryImage = async (image) => {
 	return imageUrl;
 }
 
-module.exports = cloudinaryImage;
+
+async function destroyCloudinaryImage(id) {
+	await cloudinary.v2.uploader.destroy(id, (err, result) => {
+		if (err) console.log(err);
+		else console.log(result);
+	})
+}
+
+module.exports = {
+	cloudinaryImage,
+	destroyCloudinaryImage
+}
