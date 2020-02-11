@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Token = sequelize.define('Token', {
-    user_id: DataTypes.INTEGER
+    token: DataTypes.INTEGER
   }, {});
   Token.associate = function(models) {
     // associations can be defined here

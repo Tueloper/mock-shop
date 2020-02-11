@@ -31,9 +31,8 @@ module.exports = (sequelize, DataTypes) => {
 
     //token association with user
     User.hasMany(models.Token, {
-      foreignKey: 'tokenId',
-      as: 'token',
-      onDelete: 'CASADE'
+      foreignKey: 'user_id',
+      as: 'tokens'
     })
   };
   return User;

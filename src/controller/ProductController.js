@@ -6,10 +6,17 @@ import { cloudinaryImage, destroyCloudinaryImage } from './../utils/Cloudinary';
 const { User, Product, Cart } = models;
 
 /**
- * UserController.
+ * Product Controller.
  * 
  */
 const ProductController = {
+
+  /**
+   * 
+   * @param {req.body} req 
+   * @param {object} res 
+   * 
+   */
   async createProduct(req, res, next) {
     try {
      //trime the product object
@@ -42,7 +49,17 @@ const ProductController = {
 
       return sendSuccessResponse(res, 200, product );
     } catch (e) {
-      return next(e);
+      return sendErrorResponse(res, 400, e);
+    }
+  },
+
+  async getAllProducts(req, res ) {
+    try {
+      const products = await Product.findAll()
+
+      return sendSuccessResponse( res, 200, products )
+    } catch (e) {
+      return sendErrorResponse(res, 400, e);
     }
   },
 
