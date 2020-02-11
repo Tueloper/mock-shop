@@ -11,7 +11,8 @@ import { sendSuccessResponse, sendErrorResponse } from '../utils/sendResponse';
 import { hashPassword, comparePassword } from '../utils/passwordHash';
 import { createToken } from '../utils/processToken';
 
-const { User } = model;
+
+const { User, Token } = model;
 // const User = user;
 
 
@@ -72,6 +73,7 @@ const AuthController = {
         password: encryptedPassword,
         isAdmin: ( isAdmin === 'admin' ? 'true' : 'false'),
       });
+ 
       return sendSuccessResponse(res, 201, {
         message: 'Account created successfully',
       });
@@ -91,7 +93,13 @@ const AuthController = {
         return sendErrorResponse(res, 400, 'Details incorrect');
       }
 
+      //authenicating storing the token in the data base  
       const token = userToken(user.dataValues);
+      // return console.log(token)
+      await Token.create({
+        token: token.token,
+        user_id: user.id
+      })
       return sendSuccessResponse(res, 200, token);
     } catch (e) {
       next(e);
@@ -106,13 +114,37 @@ const AuthController = {
         where: { id: user.id },
         attributes: {
           exclude: ['password'],
-        }
+        },
+        include: [{
+          model: Token,
+          as: 'tokens'
+        }]
       });
       return sendSuccessResponse(res, 200, profile);
     } catch (e) {
       return next(e);
     }
+  },
+
+  async logout(req, res) {
+    try {
+      const user = req.userData;
+      const loginToken = req.token;
+
+      const token = await Token.findOne({
+        where: {
+          user_id: user.id,
+          token: loginToken
+        }
+      })
+      // return console.log(token);
+      await token.destroy();
+
+      return sendSuccessResponse(res, 200, 'Succefully Logged out')
+    } catch (error) {
+      return sendErrorResponse(res, 400, error)      
+    }
   }
-};
+}
 
 export default AuthController;

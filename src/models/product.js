@@ -18,8 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     imageUrl: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
+    },
+    image_publicId: {
+      type: DataTypes.STRING
     },
     isStock:{
       type: DataTypes.BOOLEAN,
