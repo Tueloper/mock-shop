@@ -14,6 +14,7 @@ export default async ( req, res, next ) => {
     const user = await User.findOne({ where: { email } });
     if (!user) return sendErrorResponse(res, 401, 'User does not exist');
     req.userData = user.dataValues;
+    req.token = token;
     next();
   } catch (err) {
     const error = err.message ? 'Authentication Failed' : err;

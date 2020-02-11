@@ -124,7 +124,27 @@ const AuthController = {
     } catch (e) {
       return next(e);
     }
+  },
+
+  async logout(req, res) {
+    try {
+      const user = req.userData;
+      const loginToken = req.token;
+
+      const token = await Token.findOne({
+        where: {
+          user_id: user.id,
+          token: loginToken
+        }
+      })
+      // return console.log(token);
+      await token.destroy();
+
+      return sendSuccessResponse(res, 200, 'Succefully Logged out')
+    } catch (error) {
+      return sendErrorResponse(res, 400, error)      
+    }
   }
-};
+}
 
 export default AuthController;
