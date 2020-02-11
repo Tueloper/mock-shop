@@ -14,7 +14,8 @@
     "migrate": "./node_modules/.bin/sequelize db:migrate",
     "undo": "./node_modules/.bin/sequelize db:migrate:undo:all",
     "seed": "./node_modules/.bin/sequelize db:seed:all",
-    "sequelize": "sequelize init"
+    "sequelize": "sequelize init",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
