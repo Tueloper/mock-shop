@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/mock-shop
     environment:
       NODE_ENV: test
-      DATABASE_URL: postgresql://postgres@localhost/cirle_test
+      DATABASE_URL: postgres://sssydlhy:bId7zbYm83nLdnsDCMD1CYQyYa2nwR9z@rajje.db.elephantsql.com:5432/sssydlhy
     steps:
       - checkout
       - run: npm install
