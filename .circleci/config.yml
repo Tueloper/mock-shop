@@ -6,7 +6,7 @@ jobs:
     working_directory: ~/mock-shop
     environment:
       NODE_ENV: test
-      DATABASE_URL: postgres://sssydlhy:bId7zbYm83nLdnsDCMD1CYQyYa2nwR9z@rajje.db.elephantsql.com:5432/sssydlhy
+      DATABASE_URL: postgres://tueloper:tue080po@127.0.0.1:5432/mockshop_db
     steps:
       - checkout
       - run: npm install
