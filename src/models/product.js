@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Product.hasMany(models.Cart, {
       foreignKey: 'productId',
-      as: 'cart'
+      as: 'carts'
     })
   };
   return Product;

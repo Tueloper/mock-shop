@@ -3,7 +3,7 @@ import { sendErrorResponse, sendSuccessResponse } from './../utils/sendResponse'
 import { isValidInput, magicTrimmer, validate } from './../utils/validator';
 import { cloudinaryImage, destroyCloudinaryImage } from './../utils/Cloudinary';
 
-const { User, Product, Cart } = models;
+const { Product } = models;
 
 /**
  * Product Controller.
@@ -17,7 +17,7 @@ const ProductController = {
    * @param {object} res 
    * 
    */
-  async createProduct(req, res, next) {
+  async createProduct(req, res) {
     try {
      //trime the product object
       const productData = magicTrimmer(req.body);
@@ -55,7 +55,7 @@ const ProductController = {
 
   async getAllProducts(req, res ) {
     try {
-      const products = await Product.findAll()
+      let products = await Product.findAll({});
 
       return sendSuccessResponse( res, 200, products )
     } catch (e) {
