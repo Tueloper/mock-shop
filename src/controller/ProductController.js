@@ -55,7 +55,7 @@ const ProductController = {
 
   async getAllProducts(req, res ) {
     try {
-      const products = await Product.findAll()
+      let products = await Product.findAll({});
 
       return sendSuccessResponse( res, 200, products )
     } catch (e) {
