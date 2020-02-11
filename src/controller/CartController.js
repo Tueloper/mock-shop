@@ -46,7 +46,7 @@ const CartController = {
         where: { userId: user.id },
         // include: [{
         //   model: Product,
-        //   as: 'products'
+        //   as: 'product'
         // }]
       });
 
@@ -56,56 +56,25 @@ const CartController = {
     }
   },
 
-  // async updateProduct(req, res){
-  //   try {
-  //     const isUpdateProduct = await Product.findOne({
-  //       where: {id: req.params.id}
-  //     });
+  async deleteProductFromCart (req, res) {
+    try {
+      const destroyableProduct = await Cart.findOne({
+        where: { 
+          id: req.params.cartId,
+          productId: req.params.productId
+        }
+      })
+      // return console.log(destroyableProduct)
+      if(!destroyableProduct) return sendErrorResponse(res, 400, 'Product does not exist')
+      else await destroyableProduct.destroy();
 
-  //     if(!isUpdateProduct) return sendErrorResponse(res, 400, 'Product Not Found');
-
-  //     //extract the update files
-  //     const { name, description, price, category, isStock} = magicTrimmer(req.body);
-
-  //     if( req.file ) {
-  //       await destroyCloudinaryImage( isUpdateProduct.image_publicId );
-  //       const imageUrl = await cloudinaryImage(req.file)
-  //       return imageUrl;
-  //     }
-      
-  //     const updatedProduct = await isUpdateProduct.update({
-  //       name: name || isUpdateProduct.name,
-  //       description: description || isUpdateProduct.description,
-  //       price: price || isUpdateProduct.price,
-  //       category: category || isUpdateProduct.category,
-  //       imageUrl: imageUrl.secure_url || isUpdateProduct.imageUrl,
-  //       image_publicId: imageUrl.public_id || isUpdateProduct.image_publicId,
-  //       isStock: isStock || isUpdateProduct.isStock
-  //     })
-
-  //     return sendSuccessResponse(res, 200, updatedProduct )
-  //   } catch (error) {
-      
-  //   }
-
-  // },
-
-  // async deleteProduct(req, res) {
-  //   try {
-  //     const destroyableProduct = await Product.findOne({
-  //       where: { id: req.params.id }
-  //     })
-
-  //     if(!destroyableProduct) return sendErrorResponse(res, 400, 'Product does not exist')
-  //     else await destroyableProduct.destroy();
-
-  //     return sendSuccessResponse(res, 200, {
-  //       message: 'Product deleted Succeffully'
-  //     })
-  //   } catch (error) {
-  //     return next(e)
-  //   }
-  // }
+      return sendSuccessResponse(res, 200, {
+        message: 'Product deleted Succeffully'
+      })
+    } catch (error) {
+      return next(e)
+    }
+  }
 };
 
 export default CartController;

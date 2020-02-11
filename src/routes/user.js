@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/cart/create/:productId', [ Auth, isUser ], UserController.AddProductCart );
 router.get('/profile/carts', [ Auth, isUser ], UserController.getUserCartProducts );
+router.delete('/cart/:cartId/product/:productId', [ Auth, isUser ], UserController.deleteProductFromCart )
 
 export default router;
