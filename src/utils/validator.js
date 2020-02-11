@@ -56,15 +56,15 @@ export const inValidEmail = (email) => {
 export const inValidPassword = (password) => {
   if (!password) return 'password is required';
   if (password.length < 8) return 'password should be at least eight characters';
-  if (!/\d/.test(password) || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/^[a-zA-Z0-9]+$/.test(password)) {
+  if (!password.match(/[a-z]/g) && !password.match( /[A-Z]/g) && !password.match(/[0-9]/g) && !password.match(/[^a-zA-Z\d]/g)) {
     return 'password should contain at least one Uppercase letter, one lowercase letter, and at least one digit';
   }
   return null;
 };
 
-export const inValidInput = (text) => {
+export const isValidInput = (text) => {
   if (!text) return 'Input invalid, field cannot be empty';
-  if (!/^.{4,100}$/.test(text)) return 'text should be minimum of 5 characters and maximum of 100';
+  if (!/^.{2,100}$/.test(text)) return 'Name should be minimum of 3 characters and maximum of 100';
 };
 
 export const validate = (obj) => {

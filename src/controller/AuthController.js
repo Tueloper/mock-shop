@@ -5,13 +5,14 @@ import {
   inValidEmail,
   inValidPassword,
   magicTrimmer,
+  isValidInput
 } from '../utils/validator';
 import { sendSuccessResponse, sendErrorResponse } from '../utils/sendResponse';
 import { hashPassword, comparePassword } from '../utils/passwordHash';
 import { createToken } from '../utils/processToken';
 
-const { user } = model;
-const User = user;
+const { User } = model;
+// const User = user;
 
 
 // Returns token for logged in user.
@@ -36,16 +37,17 @@ const userToken = (user) => {
 const AuthController = {
   async signUp(req, res, next) {
     try {
-      console.log(req.body)
       // Trims req.body to remove leading and trailing white spaces
       const userData = magicTrimmer(req.body);
+
       const {
         firstName, lastName, email, password, isAdmin
       } = userData;
+
       // validate inputs
       const schema = {
-        firstName: inValidName('First Name', firstName),
-        lastName: isValidName('Last Name', lastName),
+        firstName: isValidInput('FirstName', firstName),
+        lastName: isValidInput(lastName),
         email: inValidEmail(email),
         password: inValidPassword(password),
       };
@@ -68,11 +70,10 @@ const AuthController = {
         lastName,
         email,
         password: encryptedPassword,
-        role: (role === 'admin' ? 'true' : 'false'),
+        isAdmin: ( isAdmin === 'admin' ? 'true' : 'false'),
       });
       return sendSuccessResponse(res, 201, {
         message: 'Account created successfully',
-        data: userToken()
       });
     } catch (e) {
       return next(e);
@@ -80,17 +81,16 @@ const AuthController = {
   },
 
   async signIn(req, res, next) {
-    const { email, username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      const user = email
-        ? await User.findOne({ where: { email } })
-        : await User.findOne({ where: { username } });
+      const user = await User.findOne({ where: { email } });
+      // return console.log(user)
       if (!user) return sendErrorResponse(res, 404, 'User or password incorrect');
       const checkPassword = comparePassword(password, user.dataValues.password);
       if (!checkPassword) {
         return sendErrorResponse(res, 400, 'Details incorrect');
       }
-      return sendSuccessResponse(res, 200, userInfo(user.dataValues));
+      return sendSuccessResponse(res, 200, userToken(user.dataValues));
     } catch (e) {
       next(e);
     }
