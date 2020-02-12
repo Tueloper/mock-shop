@@ -16,14 +16,6 @@ module.exports = {
           as: 'userId'
         }
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Products',
-          key: 'id',
-          as: 'productId'
-        }
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -39,6 +39,14 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      cartId: {
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'Carts',
+          key: 'id',
+          as: 'cartId'
+        }
       }
     });
   },

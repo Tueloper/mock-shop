@@ -13,14 +13,12 @@ export default {
 
    const cartData = [
     {
-      productId: '2',
       userId: '2',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
     {
-      productId: '1',
-      userId: '2',
+      userId: '1',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     }
