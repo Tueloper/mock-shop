@@ -71,7 +71,7 @@ const AuthController = {
         lastName,
         email,
         password: encryptedPassword,
-        isAdmin: ( isAdmin === 'admin' ? 'true' : 'false'),
+        isAdmin: ( isAdmin === 'true' ? 'true' : 'false'),
       });
  
       return sendSuccessResponse(res, 201, {
