@@ -25,9 +25,14 @@ const cloudinaryImage = async (image) => {
 
 
 async function destroyCloudinaryImage(id) {
-	await cloudinary.v2.uploader.destroy(id, (err, result) => {
-		if (err) console.log(err);
-		else console.log(result);
+	await cloudinary.v2.uploader.destroy(id, (err, result, next) => {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(result);
+			return;
+		}
+		return next()
 	})
 }
 

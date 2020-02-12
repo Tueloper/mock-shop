@@ -65,9 +65,12 @@ const ProductController = {
 
   async updateProduct(req, res){
     try {
+      let imageUrl;
+
       const isUpdateProduct = await Product.findOne({
         where: {id: req.params.id}
       });
+      // return console.log(isUpdateProduct)
 
       if(!isUpdateProduct) return sendErrorResponse(res, 400, 'Product Not Found');
 
@@ -76,8 +79,8 @@ const ProductController = {
 
       if( req.file ) {
         await destroyCloudinaryImage( isUpdateProduct.image_publicId );
-        const imageUrl = await cloudinaryImage(req.file)
-        return imageUrl;
+        imageUrl = await cloudinaryImage(req.file)
+        // return imageUrl;
       }
       
       const updatedProduct = await isUpdateProduct.update({
