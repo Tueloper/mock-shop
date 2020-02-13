@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     //association with products
-    Cart.hasMany(models.Product, {
+    Cart.hasMany(models.CartDetail, {
       foreignKey: 'cartId',
-      as: 'products'
+      as: 'cartdetails'
     })
   };
   return Cart;

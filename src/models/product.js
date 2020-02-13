@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     image_publicId: {
       type: DataTypes.STRING
     },
+    quantity: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
     isStock:{
       type: DataTypes.BOOLEAN,
       defaultValue: false,
@@ -30,9 +34,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Product.associate = function(models) {
     // associations can be defined here
-    Product.belongsTo(models.Cart, {
-      foreignKey: 'cartId',
-      onDelete: 'CASADE'
+    Product.hasMany(models.CartDetail, {
+      foreignKey: 'productId',
+      as: 'cartdetails'
     })
   };
   return Product;

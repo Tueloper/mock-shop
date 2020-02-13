@@ -27,9 +27,14 @@ const CartController = {
       });
 
       const cart = await Cart.create({
-          userId: user.id,
-          productId: product.id
+        userId: user.id
       })
+
+      await product.update({
+        cartId: cart.id || cartId
+      })
+
+    
       // return console.log(cart)
 
       return sendSuccessResponse(res, 200, cart );
@@ -42,6 +47,7 @@ const CartController = {
     try {
 
       const user = req.userData;
+      
       const carts = await Cart.findAll({
         where: { userId: user.id },
         // include: [{

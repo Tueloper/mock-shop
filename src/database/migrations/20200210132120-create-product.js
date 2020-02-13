@@ -29,6 +29,10 @@ module.exports = {
       image_publicId: {
         type: Sequelize.STRING
       },
+      quantity: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       isStock: {
         type: Sequelize.BOOLEAN
       },
@@ -39,14 +43,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      cartId: {
-        type: Sequelize.INTEGER,
-        reference: {
-          model: 'Carts',
-          key: 'id',
-          as: 'cartId'
-        }
       }
     });
   },

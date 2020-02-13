@@ -18,8 +18,8 @@ export default {
       category: 'Cocktail',
       price: 499.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/qyyvtu1468878544.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -29,8 +29,8 @@ export default {
       category: 'Cocktail',
       price: 399.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/yqvvqs1475667388.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -40,8 +40,8 @@ export default {
       category: 'Cocktail',
       price: 449.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/8ozumt1572901761.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -51,8 +51,8 @@ export default {
       category: 'Cocktail',
       price: 679.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/xvwusr1472669302.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -62,8 +62,8 @@ export default {
       category: 'Cocktail',
       price: 179.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/xtuyqv1472669026.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -73,8 +73,8 @@ export default {
       category: 'Cocktail',
       price: 449.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/ywxwqs1461867097.jpg',
-      isStock: 'True',
-      cartId: '1',
+      isStock: 'true',
+      quantity: '3',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -84,8 +84,8 @@ export default {
       category: 'Cocktail',
       price: 679.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/ywxwqs1461867097.jpg',
-      isStock: 'True',
-      cartId: '2',
+      isStock: 'false',
+      quantity: '0',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -95,8 +95,8 @@ export default {
       category: 'Cocktail',
       price: 899.99,
       imageUrl: 'https://www.thecocktaildb.com/images/media/drink/vqyxqx1472669095.jpg',
-      isStock: 'True',
-      cartId: '2',
+      isStock: 'false',
+      quantity: '0',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     }
