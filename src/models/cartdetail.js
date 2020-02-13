@@ -14,6 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'productId',
       onDelete: 'CASADE'
     })
+
+  
   };
   return CartDetail;
 };
