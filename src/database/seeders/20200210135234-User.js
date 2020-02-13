@@ -19,7 +19,7 @@ export default {
       lastName: 'Ozurumba',
       email: 'tozo2345@yahoo.com',
       password: hashPassword('Password111'),
-      isAdmin: 'True',
+      isAdmin: 'true',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -28,7 +28,7 @@ export default {
       lastName: 'Mberede',
       email: 'ugochukwu.mberede@yahoo.com',
       password: hashPassword('Password111'),
-      isAdmin: 'False',
+      isAdmin: 'false',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     },
@@ -37,7 +37,7 @@ export default {
       lastName: 'Olosunde',
       email: 'ayooluwa.olosunde@yahoo.com',
       password: hashPassword('Password111'),
-      isAdmin: 'True',
+      isAdmin: 'true',
       createdAt: Sequelize.literal('NOW()'),
       updatedAt: Sequelize.literal('NOW()')
     }

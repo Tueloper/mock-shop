@@ -29,6 +29,10 @@ module.exports = {
       image_publicId: {
         type: Sequelize.STRING
       },
+      quantity: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
       isStock: {
         type: Sequelize.BOOLEAN
       },

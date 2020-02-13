@@ -1,7 +1,14 @@
 import models from './../models';
 import { sendErrorResponse, sendSuccessResponse } from './../utils/sendResponse';
 
-const {  Product, Cart } = models;
+const {  Product, Cart, CartDetail } = models;
+
+// Returns token for logged in user.
+const deductQuantity = async (resQuantity) => {
+  await product.update({
+    quantity: parseInt(product.quantity) - parseInt(resQuantity) || product.quantity
+  })
+};
 
 /**
  * Product Controller.
@@ -15,7 +22,7 @@ const CartController = {
    * @param {object} res 
    * 
    */
-  async AddProductCart(req, res, next) {
+  async AddProductCart(req, res) {
     try {
       
       //retrive user
@@ -26,15 +33,70 @@ const CartController = {
         where: {id: req.params.productId }
       });
 
-      const cart = await Cart.create({
-          userId: user.id,
-          productId: product.id
-      })
-      // return console.log(cart)
+      if( product.quantity < req.body.quantity ) {
+        return sendErrorResponse(res, 404, 'That amout of product is unavialable')
+      }
 
-      return sendSuccessResponse(res, 200, cart );
+      const cart = await Cart.findOne({ where: { userId: user.id }})
+
+    
+      // return console.log(cartDetails)
+
+      // logic starts here
+      if (!cart) {
+
+        const newCart = await Cart.create({
+          userId: user.id
+        })
+        const cartDetail = await CartDetail.create({
+          cartId: newCart.id,
+          productId: product.id,
+          quantity: req.body.quantity
+        });
+        await product.update({
+          quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
+        })
+        return sendSuccessResponse(res, 200, cartDetail );
+        
+      }else {
+
+        const cartDetails = await CartDetail.findOne({
+          where: {
+            productId: product.id,
+            cartId: cart.id
+          }
+        })
+        if (!cartDetails) {
+           
+          // return console.log(cart)
+          const updatedCartDetails = await CartDetail.create({
+            cartId: cart.id,
+            productId: product.id,
+            quantity: req.body.quantity
+          });
+  
+          // return console.log(updatedCartDetails)
+          await product.update({
+            quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
+          })
+  
+          return sendSuccessResponse(res, 200, updatedCartDetails );
+
+        }else if ( cartDetails.productId === product.id ) {
+
+          const updatedCartDetails = await cartDetails.update({
+            quantity: parseInt(req.body.quantity )+ parseInt(cartDetails.quantity) || cartDetails.quantity
+          })
+          await product.update({
+            quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
+          })
+          return sendSuccessResponse(res, 200, updatedCartDetails );
+  
+        } 
+      }
     } catch (e) {
-      return sendErrorResponse(res, 400, e);
+      console.log(e)
+      return sendErrorResponse(res, 400, e.message);
     }
   },
 
@@ -42,26 +104,37 @@ const CartController = {
     try {
 
       const user = req.userData;
-      const carts = await Cart.findAll({
-        where: { userId: user.id },
-        // include: [{
-        //   model: Product,
-        //   as: 'product'
-        // }]
+      
+      const cart = await Cart.findAll({
+        where: { userId: user.id }
       });
 
-      return sendSuccessResponse( res, 200, carts )
+      const cartdetails = await CartDetail.findAll({
+        where: { cartId: cart[0].id },
+      })
+
+      let productID = [];
+      cartdetails.forEach(async (data) => {
+        productID.push(data.productId);
+        return productID
+      })
+
+      const products = await Product.findAll({
+        where: { id: productID}
+      })
+
+      return sendSuccessResponse( res, 200, products )
     } catch (e) {
-      return sendErrorResponse(res, 400, e);
+      return sendErrorResponse(res, 400, e.message);
     }
   },
 
   async deleteProductFromCart (req, res) {
     try {
-      const destroyableProduct = await Cart.findOne({
+      const destroyableProduct = await CartDetail.findOne({
         where: { 
-          id: req.params.cartId,
-          productId: req.params.productId
+          id: req.params.cartdetailId,
+          productId: req.params.productId,
         }
       })
       // return console.log(destroyableProduct)
