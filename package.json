@@ -4,7 +4,18 @@
   "description": "A mock shop enabling users to order for products and storing in their carts",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js --exec babel-node",
+    "build": "babel src --out-dir dist",
+    "start": "node dist/index.js",
+    "test": "nyc mocha --no-timeout './tests' --exit",
+    "test:report": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text-summary mocha --timeout 5000 './tests' --exit",
+    "coverage": "cross-env NODE_ENV=test nyc npm run test && nyc report --reporter=lcov --reporter=text-lcov --exit",
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate",
+    "migrate": "./node_modules/.bin/sequelize db:migrate",
+    "undo": "./node_modules/.bin/sequelize db:migrate:undo:all",
+    "seed": "./node_modules/.bin/sequelize db:seed:all",
+    "sequelize": "sequelize init",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -28,19 +39,22 @@
     "@babel/polyfill": "^7.8.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "chalk": "^3.0.0",
+    "cloudinary": "^1.19.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.0",
+    "datauri": "^2.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "pg": "^7.18.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1",
-    "uuid": "^3.4.0"
-  },
-  "devDependencies": {
+    "sharp": "^0.24.0",
+    "uuid": "^3.4.0",
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
@@ -49,6 +63,11 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.9",
+    "mocha": "^7.0.1",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0"
+  },
+  "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-node": "^4.0.0",
@@ -56,10 +75,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "mocha": "^7.0.1",
-    "nodemon": "^2.0.2",
-    "nyc": "^15.0.0"
+    "eslint-plugin-react-hooks": "^1.7.0"
   },
   "nyc": {
     "exclude": [
