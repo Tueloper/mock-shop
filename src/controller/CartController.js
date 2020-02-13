@@ -108,24 +108,22 @@ const CartController = {
       const cart = await Cart.findAll({
         where: { userId: user.id }
       });
-      
-      // return console.log(cart[0].id)
 
       const cartdetails = await CartDetail.findAll({
         where: { cartId: cart[0].id },
       })
-      let cartProducts = [];
 
+      let productID = [];
       cartdetails.forEach(async (data) => {
-        // console.log(data.productId)
-        const product = await Product.findOne({
-          where: { id: data.productId }
-        })
-        cartProducts.push(product.dataValues);
-        return console.log(cartProducts)
+        productID.push(data.productId);
+        return productID
       })
-      return console.log(cartProducts)
-      return sendSuccessResponse( res, 200, cartProducts )
+
+      const products = await Product.findAll({
+        where: { id: productID}
+      })
+
+      return sendSuccessResponse( res, 200, products )
     } catch (e) {
       return sendErrorResponse(res, 400, e.message);
     }
