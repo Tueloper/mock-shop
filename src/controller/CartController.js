@@ -12,19 +12,19 @@ const deductQuantity = async (resQuantity) => {
 
 /**
  * Product Controller.
- * 
+ *
  */
 const CartController = {
 
   /**
-   * 
-   * @param {req.body} req 
-   * @param {object} res 
-   * 
+   *
+   * @param {req.body} req
+   * @param {object} res
+   *
    */
   async AddProductCart(req, res) {
     try {
-      
+
       //retrive user
       const user = req.userData;
 
@@ -39,7 +39,6 @@ const CartController = {
 
       const cart = await Cart.findOne({ where: { userId: user.id }})
 
-    
       // return console.log(cartDetails)
 
       // logic starts here
@@ -57,7 +56,7 @@ const CartController = {
           quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
         })
         return sendSuccessResponse(res, 200, cartDetail );
-        
+
       }else {
 
         const cartDetails = await CartDetail.findOne({
@@ -67,19 +66,19 @@ const CartController = {
           }
         })
         if (!cartDetails) {
-           
+
           // return console.log(cart)
           const updatedCartDetails = await CartDetail.create({
             cartId: cart.id,
             productId: product.id,
             quantity: req.body.quantity
           });
-  
+
           // return console.log(updatedCartDetails)
           await product.update({
             quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
           })
-  
+
           return sendSuccessResponse(res, 200, updatedCartDetails );
 
         }else if ( cartDetails.productId === product.id ) {
@@ -91,8 +90,8 @@ const CartController = {
             quantity: parseInt(product.quantity) - parseInt(req.body.quantity) || product.quantity
           })
           return sendSuccessResponse(res, 200, updatedCartDetails );
-  
-        } 
+
+        }
       }
     } catch (e) {
       console.log(e)
@@ -104,7 +103,7 @@ const CartController = {
     try {
 
       const user = req.userData;
-      
+
       const cart = await Cart.findAll({
         where: { userId: user.id }
       });
@@ -132,7 +131,7 @@ const CartController = {
   async deleteProductFromCart (req, res) {
     try {
       const destroyableProduct = await CartDetail.findOne({
-        where: { 
+        where: {
           id: req.params.cartdetailId,
           productId: req.params.productId,
         }
