@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+  web:
+    build: .
+    container_name: mockshop
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL_DEV: postgres://tueloper:tue080po@127.0.0.1:5432/mockshop_db
+      NODE_ENV: development
+    ports:
+      - "5000:4000"
+    command: npm run dev
+    volumes:
+      - .:/app/
+      - /app/node_modules
+
+  postgres:
+    container_name: shop_postgres
+    image: postgres:10.4
+    restart: unless-stopped
+    ports:
+      - "35432:35432"
+    environment:
+      POSTGRES_USER: tueloper
+      POSTGRES_DB: tue080po
